@@ -1,0 +1,76 @@
+version: '3'
+
+volumes:
+  laracamp_uploads:
+    external: true
+
+services:
+  # PHP Container (App Engine)
+  laracamp_app:
+    build:
+      context: .
+      dockerfile: ./docker/app.dockerfile
+    container_name: laracamp_app
+    restart: always
+    tty: true
+    environment:
+      SERVICE_NAME: laracamp_app
+      SERVICE_TAGS: dev
+    working_dir: /var/www
+    networks:
+      mynet:
+        ipv4_address: 10.0.0.205
+#    command: ["php-fpm && php artisan queue:listen --queue=ticmi"]
+    volumes:
+      - ./:/var/www
+      # - ./docker/php/local.ini:/usr/local/etc/php/conf.d/local.ini
+      # - dataticmi_uploads:/data/pdf/
+#    external_links:
+#      - redis
+    networks:
+      - default
+
+  #Nginx Service
+  server_laracamp:
+    image: nginx:alpine
+    container_name: server_laracamp
+    restart: unless-stopped
+    tty: true
+    ports:
+      - '10.0.0.205:80:80'
+      # - '443:443'
+      # - "443:443"
+    working_dir: /var/www
+    volumes:
+      - ./:/var/www
+      - ./docker/nginx/conf.d/:/etc/nginx/conf.d/
+#    external_links:
+#      - redis
+#    links:
+#      - redis
+    # networks:
+    #   - default
+
+
+#  redis:
+#    image: redis:3.0
+#    container_name: redis
+#    ports:
+#      - "6379:6379"
+#    networks:
+#      - default
+
+#Volumes
+#volumes:
+#  dbdata:
+#    driver: local
+
+#Docker Networks
+networks:
+  mynet:
+    driver: bridge
+    ipam:
+      driver: default
+      config:
+        - subnet: 10.0.0.0/24
+        # - gateway: 10.0.0.1
