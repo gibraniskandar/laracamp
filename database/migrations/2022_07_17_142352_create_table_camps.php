@@ -30,8 +30,6 @@ class CreateTableCamps extends Migration
      */
     public function down()
     {
-        Schema::table('camps', function (Blueprint $table) {
-            //
-        });
+        Schema::dropIfExists('camps');
     }
 }
