@@ -19,7 +19,7 @@ services:
     working_dir: /var/www
     networks:
       mynet:
-        ipv4_address: 10.0.0.205
+        ipv4_address: 192.168.1.18
 #    command: ["php-fpm && php artisan queue:listen --queue=ticmi"]
     volumes:
       - ./:/var/www
@@ -37,7 +37,7 @@ services:
     restart: unless-stopped
     tty: true
     ports:
-      - '10.0.0.205:80:80'
+      - '192.168.1.18:80:80'
       # - '443:443'
       # - "443:443"
     working_dir: /var/www
@@ -72,5 +72,5 @@ networks:
     ipam:
       driver: default
       config:
-        - subnet: 10.0.0.0/24
+        - subnet: 192.168.0.0/24
         # - gateway: 10.0.0.1
