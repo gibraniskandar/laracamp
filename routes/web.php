@@ -29,9 +29,9 @@ Route::get('auth/google/callback', [UserController::class, 'googleCallback'])->n
 
 Route::middleware(['auth'])->group(function () {
     Route::get('checkout/succes', [CheckoutController::class, 'success'])->name('checkout.succes');
-    Route::get('checkout/{camps:slug}', [CheckoutController::class, 'create'])->name('checkout.create');
-    Route::post('checkout/{camps}', [CheckoutController::class, 'store'])->name('checkout.store');
-    
+    Route::get('checkout/{camp:slug}', [CheckoutController::class, 'create'])->name('checkout.create');
+    Route::post('checkout/{camp}', [CheckoutController::class, 'store'])->name('checkout.store');
+
     Route::get('dashboard', [DashboardController::class, 'index'])->name('dashboard');
 });
 

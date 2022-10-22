@@ -16,78 +16,38 @@
         <div class="row my-5">
             <table class="table">
                 <tbody>
-                    <tr class="align-middle">
-                        <td width="18%">
-                            <img src="{{ asset('images/item_bootcamp.png') }}" height="120" alt="">
-                        </td>
-                        <td>
-                            <p class="mb-2">
-                                <strong>Gila Belajar</strong>
-                            </p>
-                            <p>
-                                September 24, 2021
-                            </p>
-                        </td>
-                        <td>
-                            <strong>$280,000</strong>
-                        </td>
-                        <td>
-                            <strong>Waiting for Payment</strong>
-                        </td>
-                        <td>
-                            <a href="#" class="btn btn-primary">
-                                Get Invoice
-                            </a>
-                        </td>
-                    </tr>
-                    <tr class="align-middle">
-                        <td width="18%">
-                            <img src="{{ asset('images/item_bootcamp.png') }}" height="120" alt="">
-                        </td>
-                        <td>
-                            <p class="mb-2">
-                                <strong>Gila Belajar</strong>
-                            </p>
-                            <p>
-                                September 24, 2021
-                            </p>
-                        </td>
-                        <td>
-                            <strong>$280,000</strong>
-                        </td>
-                        <td>
-                            <strong><span class="text-green">Payment Success</span></strong>
-                        </td>
-                        <td>
-                            <a href="#" class="btn btn-primary">
-                                Get Invoice
-                            </a>
-                        </td>
-                    </tr>
-                    <tr class="align-middle">
-                        <td width="18%">
-                            <img src="{{ asset('images/item_bootcamp.png') }}" height="120" alt=" ">
-                        </td>
-                        <td>
-                            <p class=" mb-2 ">
-                                <strong>Gila Belajar</strong>
-                            </p>
-                            <p>
-                                September 24, 2021
-                            </p>
-                        </td>
-                        <td>
-                            <strong>$280,000</strong>
-                        </td>
-                        <td>
-                            <strong><span class="text-red ">Canceled</span></strong>
-                        </td>
-                        <td>
-                            <a href="# " class="btn btn-primary ">
-                                Get Invoice
-                            </a>
-                        </td>
-                    </tr>
+                    @forelse ($data as $datas)
+                        <tr class="align-middle">
+                            <td width="18%">
+                                <img src="{{ asset('images/item_bootcamp.png') }}" height="120" alt="">
+                            </td>
+                            <td>
+                                <p class="mb-2">
+                                    <strong>{{$datas->Camp->title}}</strong>
+                                </p>
+                                <p>
+                                    {{$datas->created_at->format('M d, Y')}}
+                                </p>
+                            </td>
+                            <td>
+                                <strong>{{$datas->Camp->price}}k</strong>
+                            </td>
+                            <td>
+                                @if ($datas->is_paid)
+                                    <strong class="text-success">Payment Success</strong>
+                                @else
+                                    <strong>Waiting for Payment</strong>
+                                @endif
+                            </td>
+                            <td>
+                                <a href="https://wa.me/089635747482?Hi" class="btn btn-primary" target="_blank">
+                                    Contact Support
+                                </a>
+                            </td>
+                        </tr>
+                    @empty
+                        <td colspan="5"> No Data </td>
+                    @endforelse
                 </tbody>
             </table>
         </div>

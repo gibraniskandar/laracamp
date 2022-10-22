@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\User;
 
 use App\Http\Controllers\Controller;
-use App\Models\Camps;
+use App\Models\Camp;
 use App\Models\Checkout;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -26,10 +26,10 @@ class CheckoutController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create(Camps $camps)
+    public function create(Camp $camp)
     {
         return view('checkout.create', [
-            'camps' => $camps,
+            'camp' => $camp,
         ]);
     }
 
@@ -39,11 +39,11 @@ class CheckoutController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request, Camps $camps)
+    public function store(Request $request, Camp $camp)
     {
         $data = $request->all();
         $data['user_id'] = Auth::id();
-        $data['camp_id']  = $camps->id;
+        $data['camp_id']  = $camp->id;
         $data['expired']  = date('Y-m-d', strtotime($data['expired']));
 
         $users = Auth::user();
