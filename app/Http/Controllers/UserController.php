@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\User\AfterRegisterMail;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Socialite;
 use Auth;
+use Illuminate\Support\Facades\Mail;
 
 class UserController extends Controller
 {
@@ -27,7 +29,14 @@ class UserController extends Controller
             'is_admin' => 0
         ];
 
-        $user = User::firstOrCreate(['email' => $data['email']],$data);
+        // $user = User::firstOrCreate(['email' => $data['email']],$data);
+        $user = User::whereEmail($data['email'])->first();
+
+        if (!$user) {
+            $user = User::create($data);
+            Mail::to($user->email)->send(new AfterRegisterMail($user));
+        }
+
         Auth::login($user, true);
 
         return redirect(route('welcome'));
