@@ -87,4 +87,9 @@ class DashboardController extends Controller
     {
         //
     }
+
+    public function invoices(Checkout $checkout)
+    {
+        return $checkout;
+    }
 }
